@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel=stylesheet href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
+    <style>
+        .imagen {
+            width: 128px;
+            height: 128px;
+            transition: 1s;
+        }
+    </style>
+    <title>Minijuego Memo-test</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        Memo-test
+    </div>
+    <button type="button" class="btn btn-success">Jugar</button>
+    <div class="container">
+        <div class="row justify-content-md-center mb-3">
+            <div id='contador-tiempo' class="col-sm-3">
+                Tiempo transcurrido: 0 segundos
+            </div>
+            <div id='cantidad-intentos' class="col-sm-3">
+                Intentos: 0
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row d-flex justify-content-center mb-3">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+        </div>
+        <div class="row d-flex justify-content-center mb-3">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+        </div>
+        <div class="row d-flex justify-content-center mb-3">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+        </div>
+        <div class="row d-flex justify-content-center mb-3">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+        </div>
+    </div>
+    <div class="invisible">
+        <img id='banana' class='frutas' src='img/frutas/banana.jpeg'>
+        <img id='cereza' class='frutas' src='img/frutas/cereza.jpeg'>
+        <img id='durazno' class='frutas' src='img/frutas/durazno.jpeg'>
+        <img id='frutilla' class='frutas' src='img/frutas/frutilla.jpg'>
+        <img id='kiwi' class='frutas' src='img/frutas/kiwi.jpeg'>
+        <img id='manzana' class='frutas' src='img/frutas/manzana.jpeg'>
+        <img id='naranja' class='frutas' src='img/frutas/naranja.jpeg'>
+        <img id='pera' class='frutas' src='img/frutas/pera.jpeg'>
+    </div>
+    <script>
+
+        const imagenesRandom = mezclar();
+        const imagenes = document.querySelectorAll('.imagen');
+        const cuadradoPregunta = 'img/cuadrado-pregunta.png';
+
+        let segundos = 0;
+        setInterval(actualizarContadorTiempo, 1000);
+
+        const cantidadIntentos = document.querySelector('#cantidad-intentos');
+        let contadorIntentos = 0;
+
+        let imagenElegida = [];
+        contadorIntentos.textContent = `Intentos: ${cantidadIntentos}`;
+        elegirImagen();
+
+        function mezclar() {
+            const imagenes = Array.from(document.querySelectorAll('.frutas'));
+            const imagenesDuplicado = [];
+            for (let i = 0; i < imagenes.length; i++) {
+                imagenesDuplicado.push(imagenes[i]);
+                imagenesDuplicado.push(imagenes[i]);
+            }
+            const largoImagenes = imagenesDuplicado.length;
+            const nuevoArrImagenes = [];
+            for (let i = 0; i < largoImagenes; i++) {
+                const numeroRandom = Math.floor(Math.random() * imagenesDuplicado.length);
+                nuevoArrImagenes[i] = imagenesDuplicado[numeroRandom];
+                imagenesDuplicado.splice(numeroRandom, 1);
+            }
+            return nuevoArrImagenes;
+        }
+
+        function elegirImagen() {
+            imagenes.forEach((posicion, i) => {
+                posicion.onclick = () => {
+                    if (posicion !== imagenElegida[0]) {
+                        imagenes[i].src = imagenesRandom[i].src;
+                        imagenElegida.push(posicion);
+                        if (imagenElegida.length === 2) { comprobarAcierto() };
+                    } else {
+                        console.log('apretaste dos veces la misma vivo');
+                    }
+                };
+            });
+        }
+
+        function comprobarAcierto() {
+            bloquearInputUsuario();
+            if (imagenElegida[0].src === imagenElegida[1].src) {
+                console.log('correcto');
+                setTimeout(() => {
+                    imagenElegida[0].classList.add('invisible');
+                    imagenElegida[1].classList.add('invisible');
+                    imagenElegida = [];
+                    desbloquearInputUsuario();
+                }, 250);
+            } else {
+                console.log('incorrecto');
+                setTimeout(() => {
+                    imagenElegida[0].src = cuadradoPregunta;
+                    imagenElegida[1].src = cuadradoPregunta;
+                    imagenElegida = [];
+                    contadorIntentos++;
+                    cantidadIntentos.textContent = `Intentos: ${contadorIntentos}`;
+                    desbloquearInputUsuario();
+                }, 1500);
+            }
+        }
+
+        function bloquearInputUsuario() {
+            imagenes.forEach(posicion => {
+                posicion.onclick = (() => { });
+            });
+        }
+
+        function desbloquearInputUsuario() {
+            imagenes.forEach(posicion => {
+                posicion.onclick = elegirImagen;
+            });
+        }
+
+        function actualizarContadorTiempo() {
+            const tiempo = document.querySelector('#contador-tiempo');
+            segundos++;
+            tiempo.textContent = `Tiempo transcurrido: ${segundos} segundos`;
+        }
+
+    </script>
+</body>
+
+</html>
