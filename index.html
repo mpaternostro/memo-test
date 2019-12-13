@@ -29,10 +29,10 @@
     <div class="d-none" id='juego'>
         <div class="container">
             <div class="row justify-content-md-center mb-3">
-                <div id='contador-tiempo' class="col-sm-3">
+                <div class="alert alert-primary col-sm-5" id='contador-tiempo' role="alert">
                     Tiempo transcurrido: 0 segundos
                 </div>
-                <div id='cantidad-intentos' class="col-sm-3">
+                <div class="alert alert-warning col-sm-3" id='cantidad-intentos' role="alert">
                     Intentos: 0
                 </div>
             </div>
@@ -146,6 +146,7 @@
                     imagenElegida[1].classList.add('invisible');
                     imagenElegida = [];
                     aciertos++;
+                    aumentarIntentos();
                     if (aciertos === 8) {
                         finJuego();
                     }
@@ -156,8 +157,7 @@
                     imagenElegida[0].src = cuadradoPregunta;
                     imagenElegida[1].src = cuadradoPregunta;
                     imagenElegida = [];
-                    contadorIntentos++;
-                    cantidadIntentos.textContent = `Intentos: ${contadorIntentos}`;
+                    aumentarIntentos();
                     desbloquearInputUsuario();
                 }, 1250);
             }
@@ -175,6 +175,11 @@
             });
         }
 
+        function aumentarIntentos() {
+            contadorIntentos++;
+            cantidadIntentos.textContent = `Intentos: ${contadorIntentos}`;
+        }
+
         function actualizarContadorTiempo() {
             const tiempo = document.querySelector('#contador-tiempo');
             segundos++;
@@ -185,7 +190,7 @@
         function finJuego() {
             document.querySelector('#juego').classList.add('d-none');
             const resultados = document.querySelector('#resultados');
-            resultados.textContent = `Tardaste ${segundos} segundos, y tuviste un total de ${contadorIntentos} intentos.`;
+            resultados.textContent = `Tardaste ${segundos} segundos y tuviste un total de ${contadorIntentos} intentos.`;
             document.querySelector('#fin-del-juego').classList.remove('d-none');
             clearInterval(contadorTiempo);
         }
