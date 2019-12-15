@@ -8,8 +8,9 @@
     <link rel=stylesheet href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
     <style>
         .imagen {
-            width: 128px;
-            height: 128px;
+            width: 10%;
+            height: 10%;
+            cursor: pointer;
         }
     </style>
     <title>Minijuego Memo-test</title>
@@ -37,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id='tablero'>
             <div class="row d-flex justify-content-center mb-3">
                 <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
                 <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
@@ -81,121 +82,7 @@
             <p class="lead" id='resultados'></p>
         </div>
     </div>
-
-    <script>
-
-        const imagenes = document.querySelectorAll('.imagen');
-        let imagenElegida = [];
-        let segundos = 0;
-        let imagenesRandom = '';
-        const cuadradoPregunta = 'img/cuadrado-pregunta.png';
-        const cantidadIntentos = document.querySelector('#cantidad-intentos');
-        let contadorIntentos = 0;
-        contadorIntentos.textContent = `Intentos: ${cantidadIntentos}`;
-        let aciertos = 0;
-        let contadorTiempo = '';
-
-        document.querySelector('#jugar').onclick = (() => {
-
-            comenzarJuego();
-            imagenesRandom = mezclar();
-            contadorTiempo = setInterval(actualizarContadorTiempo, 1000);
-            elegirImagen();
-        });
-
-        function comenzarJuego() {
-            document.querySelector('#pantalla-inicio').classList.add('d-none');
-            document.querySelector('#juego').classList.remove('d-none');
-        }
-
-        function mezclar() {
-            const imagenes = Array.from(document.querySelectorAll('.frutas'));
-            const imagenesDuplicado = [];
-            for (let i = 0; i < imagenes.length; i++) {
-                imagenesDuplicado.push(imagenes[i]);
-                imagenesDuplicado.push(imagenes[i]);
-            }
-            const largoImagenes = imagenesDuplicado.length;
-            const nuevoArrImagenes = [];
-            for (let i = 0; i < largoImagenes; i++) {
-                const numeroRandom = Math.floor(Math.random() * imagenesDuplicado.length);
-                nuevoArrImagenes[i] = imagenesDuplicado[numeroRandom];
-                imagenesDuplicado.splice(numeroRandom, 1);
-            }
-            return nuevoArrImagenes;
-        }
-
-        function elegirImagen() {
-            imagenes.forEach((posicion, i) => {
-                posicion.onclick = () => {
-                    if (posicion !== imagenElegida[0]) {
-                        imagenes[i].src = imagenesRandom[i].src;
-                        imagenElegida.push(posicion);
-                        if (imagenElegida.length === 2) { comprobarAcierto() };
-                    } else {
-                    }
-                };
-            });
-        }
-
-        function comprobarAcierto() {
-            bloquearInputUsuario();
-            if (imagenElegida[0].src === imagenElegida[1].src) {
-                setTimeout(() => {
-                    imagenElegida[0].classList.add('invisible');
-                    imagenElegida[1].classList.add('invisible');
-                    imagenElegida = [];
-                    aciertos++;
-                    aumentarIntentos();
-                    if (aciertos === 8) {
-                        finJuego();
-                    }
-                    desbloquearInputUsuario();
-                }, 1150);
-            } else {
-                setTimeout(() => {
-                    imagenElegida[0].src = cuadradoPregunta;
-                    imagenElegida[1].src = cuadradoPregunta;
-                    imagenElegida = [];
-                    aumentarIntentos();
-                    desbloquearInputUsuario();
-                }, 1250);
-            }
-        }
-
-        function bloquearInputUsuario() {
-            imagenes.forEach(posicion => {
-                posicion.onclick = (() => { });
-            });
-        }
-
-        function desbloquearInputUsuario() {
-            imagenes.forEach(posicion => {
-                posicion.onclick = elegirImagen;
-            });
-        }
-
-        function aumentarIntentos() {
-            contadorIntentos++;
-            cantidadIntentos.textContent = `Intentos: ${contadorIntentos}`;
-        }
-
-        function actualizarContadorTiempo() {
-            const tiempo = document.querySelector('#contador-tiempo');
-            segundos++;
-            tiempo.textContent = `Tiempo transcurrido: ${segundos} segundos`;
-        }
-
-
-        function finJuego() {
-            document.querySelector('#juego').classList.add('d-none');
-            const resultados = document.querySelector('#resultados');
-            resultados.textContent = `Tardaste ${segundos} segundos y tuviste un total de ${contadorIntentos} intentos.`;
-            document.querySelector('#fin-del-juego').classList.remove('d-none');
-            clearInterval(contadorTiempo);
-        }
-
-    </script>
+    <script src='src/index.js'></script>
 </body>
 
 </html>
