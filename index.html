@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel=stylesheet href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
+    <style>
+        .imagen {
+            width: 10%;
+            height: 10%;
+            cursor: pointer;
+        }
+    </style>
+    <title>Minijuego Memo-test</title>
+</head>
+
+<body>
+    <div class="jumbotron" id='pantalla-inicio' style="top: 10%">
+        <h1 class="display-4">Memo-test</h1>
+        <p class="lead">Esto es un juego de memoria. Clickea en jugar para comenzar la partida.</p>
+        <hr class="my-4">
+        <p>Intenta completar el juego en el menor tiempo e intentos posible.</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button" id='jugar'>Jugar</a>
+        </p>
+    </div>
+
+    <div class="d-none" id='juego'>
+        <div class="container">
+            <div class="row justify-content-md-center mb-3">
+                <div class="alert alert-primary col-sm-5" id='contador-tiempo' role="alert">
+                    Tiempo transcurrido: 0 segundos
+                </div>
+                <div class="alert alert-warning col-sm-3" id='cantidad-intentos' role="alert">
+                    Intentos: 0
+                </div>
+            </div>
+        </div>
+        <div class="container" id='tablero'>
+            <div class="row d-flex justify-content-center mb-3">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            </div>
+            <div class="row d-flex justify-content-center mb-3">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            </div>
+            <div class="row d-flex justify-content-center mb-3">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            </div>
+            <div class="row d-flex justify-content-center mb-3">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+                <img class="mr-3 imagen" src="img/cuadrado-pregunta.png" alt="cuadrado-signo-de-pregunta">
+            </div>
+        </div>
+        <div class="invisible">
+            <img id='banana' class='frutas' src='img/frutas/banana.jpeg'>
+            <img id='cereza' class='frutas' src='img/frutas/cereza.jpeg'>
+            <img id='durazno' class='frutas' src='img/frutas/durazno.jpeg'>
+            <img id='frutilla' class='frutas' src='img/frutas/frutilla.jpg'>
+            <img id='kiwi' class='frutas' src='img/frutas/kiwi.jpeg'>
+            <img id='manzana' class='frutas' src='img/frutas/manzana.jpeg'>
+            <img id='naranja' class='frutas' src='img/frutas/naranja.jpeg'>
+            <img id='pera' class='frutas' src='img/frutas/pera.jpeg'>
+        </div>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid d-none" id='fin-del-juego'>
+        <div class="container">
+            <h1 class="display-4">Felicitaciones, lo lograste!</h1>
+            <p class="lead" id='resultados'></p>
+        </div>
+    </div>
+    <script src='src/index.js'></script>
+</body>
+
+</html>
